@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>중1 반비례 그래프 탐구</title>
+    <!-- KaTeX 로드 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        :root {
+            --header-bg: #4F46E5;
+            --header-badge: #312E81;
+            --bg-main: #F1F5F9;
+            --panel-bg: #FFFFFF;
+            --border-color: #E2E8F0;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --formula-color: #3730A3;
+            --y-color: #EA580C;
+            --btn-disabled-bg: #E2E8F0;
+            --btn-disabled-text: #94A3B8;
+            --btn-active-bg: #4F46E5;
+            --btn-active-text: #FFFFFF;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Pretendard', -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            overflow: hidden; /* 태블릿 브라우저 주소창/하단바 잘림 완벽 해결 */
+        }
+
+        /* 상단 헤더 */
+        .top-header {
+            background-color: var(--header-bg);
+            color: white;
+            padding: 6px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+            z-index: 10;
+            height: 44px;
+            box-sizing: border-box;
+            flex-shrink: 0; /* 헤더 높이 찌그러짐 방지 */
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header-badge {
+            background-color: var(--header-badge);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 12px;
+        }
+
+        .header-title {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .header-subtitle {
+            font-size: 13px;
+            opacity: 0.95;
+        }
+
+        /* 메인 콘텐츠 컨테이너 */
+        .main-content {
+            display: flex;
+            flex: 1;
+            gap: 12px;
+            padding: 8px 16px;
+            min-height: 0; /* Flexbox 내부 콘텐츠가 부모를 넘지 않게 강제 제한 */
+            height: calc(100% - 44px); /* 헤더 제외 명시적 높이 할당 */
+            max-width: 1280px; 
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* 패널 공통 */
+        .panel {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            min-height: 0; /* 패널 자체가 화면 밖으로 밀려나는 것 차단 */
+        }
+
+        /* 왼쪽 패널 */
+        .left-panel {
+            flex: 0 0 300px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .section-label {
+            color: var(--text-light);
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .formula-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2px;
+        }
+
+        .formula-display {
+            font-size: 26px;
+            color: var(--formula-color);
+            margin: 0;
+        }
+
+        .point-counter {
+            background-color: var(--bg-main);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--text-dark);
+        }
+
+        .table-container {
+            margin-top: 4px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .data-table th, .data-table td {
+            padding: 4px 0; /* 테이블 상하 여백 슬림화 */
+            border-bottom: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .data-table .th-col {
+            width: 40px;
+            border-right: 2px solid #CBD5E1;
+            color: var(--text-dark);
+        }
+
+        #x-row { background-color: #F8FAFC; }
+        #y-row td:not(.th-col) { color: var(--y-color); }
+
+        .bottom-wrap {
+            margin-top: auto; /* 남은 공간을 밀어내어 항상 하단에 고정 */
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-shrink: 0; /* 어떤 상황에서도 하단 영역이 축소되거나 밀리지 않게 강제 보호 */
+            padding-bottom: 4px;
+        }
+
+        .feedback-msg {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            border-radius: 12px;
+            padding: 8px 10px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.3;
+            min-height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            word-break: keep-all; 
+            overflow-wrap: break-word; 
+            box-sizing: border-box;
+            transition: color 0.3s;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            height: 40px; /* 버튼 높이 더욱 슬림하게 최적화 */
+            flex-shrink: 0;
+        }
+
+        .btn-action {
+            flex: 1;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-action:disabled {
+            background-color: var(--btn-disabled-bg);
+            color: var(--btn-disabled-text);
+            cursor: not-allowed;
+        }
+
+        .btn-action:not(:disabled) {
+            background-color: var(--btn-active-bg);
+            color: var(--btn-active-text);
+        }
+
+        .btn-action:not(:disabled):hover { opacity: 0.9; }
+
+        .btn-reset {
+            width: 44px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-main);
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .btn-reset:hover { background-color: #E2E8F0; }
+        .btn-reset svg { width: 18px; height: 18px; fill: var(--text-dark); }
+
+        /* 오른쪽 패널 (좌표평면) */
+        .right-panel {
+            flex: 1;
+            position: relative;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            min-height: 0; /* Flexbox 하위 넘침 방지 락 */
+        }
+
+        .progress-tag {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background-color: #EEF2FF;
+            color: var(--header-bg);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        #canvas-container {
+            flex: 1;
+            width: 100%;
+            background: white;
+            position: relative;
+            cursor: crosshair;
+            touch-action: none; 
+            border-radius: 8px;
+            overflow: hidden;
+            min-height: 0; /* 컨테이너가 부모 높이를 절대 넘지 않게 강제 */
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        #graph-labels-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        /* 2단계 요약 페이지 스타일 */
+        .summary-page {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            background-color: var(--panel-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 10px 16px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            min-height: 0;
+        }
+
+        .summary-header {
+            text-align: center;
+            margin-bottom: 10px;
+            flex-shrink: 0;
+        }
+        
+        .summary-header h1 {
+            color: var(--header-bg);
+            margin: 0 0 4px 0;
+            font-size: 18px;
+        }
+
+        .summary-header p {
+            font-size: 14px;
+            background: #EEF2FF;
+            padding: 6px 12px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 0;
+            line-height: 1.4;
+            color: var(--text-dark);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            flex: 1;
+            margin: 0 auto;
+            max-width: 800px;
+            width: 100%;
+            min-height: 0;
+        }
+
+        .summary-card {
+            background: #fff;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            box-sizing: border-box;
+        }
+
+        .summary-card h3 {
+            margin: 0 0 6px 0;
+            font-size: 15px;
+            color: var(--text-dark);
+        }
+
+        .quadrant-label {
+            font-weight: bold;
+            color: var(--header-bg);
+            font-size: 14px;
+            margin: 6px 0 0 0;
+            background: #EEF2FF;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+
+        .slider-container {
+            width: 100%;
+            margin-top: 6px;
+            padding: 6px;
+            background: var(--bg-main);
+            border-radius: 8px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .slider-container div {
+            font-size: 12px !important;
+        }
+
+        input[type=range] {
+            width: 90%;
+            margin: 4px 0;
+            cursor: pointer;
+            accent-color: var(--header-bg);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="top-header">
+        <div class="header-left">
+            <span class="header-badge">중1</span>
+            <h1 class="header-title">반비례 그래프 탐구</h1>
+        </div>
+        <div class="header-subtitle">순서쌍을 찍고 점을 이어 그래프의 특징을 발견해보세요</div>
+    </header>
+
+    <div class="main-content">
+        <!-- 1단계 -->
+        <div id="step1-view" style="display: flex; width: 100%; gap: 12px; min-height: 0;">
+            
+            <div class="panel left-panel">
+                <div class="section-label">현재 그래프</div>
+                <div class="formula-row">
+                    <div id="formula" class="formula-display"></div>
+                    <div id="point-counter" class="point-counter">0 / 6</div>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <tr id="x-row"><th class="th-col">$x$</th></tr>
+                        <tr id="y-row"><td class="th-col">$y$</td></tr>
+                    </table>
+                </div>
+
+                <!-- 하단 버튼과 안내문 영역을 바닥으로 고정 -->
+                <div class="bottom-wrap">
+                    <div id="instruction-msg" class="feedback-msg">표를 보고 알맞은 위치를 터치하세요.</div>
+                    <div class="btn-group">
+                        <button id="action-btn" class="btn-action" disabled>직선 연결하기</button>
+                        <button id="reset-btn" class="btn-reset" title="다시 하기">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel right-panel">
+                <div id="progress" class="progress-tag">$y=\frac{a}{x}$ 탐구 1/5</div>
+                <div id="canvas-container">
+                    <canvas id="graphCanvas"></canvas>
+                    <div id="graph-labels-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2단계 요약 -->
+        <div id="step2-view" class="summary-page">
+            <div class="summary-header">
+                <h1>반비례 그래프 $y = \frac{a}{x}$의 특징 요약</h1>
+                <p>
+                    • <strong>원점</strong>에 대하여 대칭인 한 쌍의 매끄러운 곡선이다.<br>
+                    • <strong>x축, y축</strong>에 점점 가까워지지만 만나지는 않는다.
+                </p>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h3 id="title-pos">$a > 0$ 일 때, $y = \frac{1}{x}$</h3>
+                    <!-- 캔버스 크기 200px로 더욱 타이트하게 압축 -->
+                    <div style="width: 200px; height: 200px; border: 2px solid var(--text-dark); background: white; border-radius: 8px;">
+                        <canvas id="canvas-pos"></canvas>
+                    </div>
+                    <p class="quadrant-label">제1사분면과 제3사분면을 지난다</p>
+                    <div class="slider-container">
+                        <div style="font-size: 13px; font-weight: bold; color: var(--text-dark);">a 값 조절 (1 ~ 20)</div>
+                        <input type="range" id="slider-pos" min="1" max="20" value="1" step="1">
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <h3 id="title-neg">$a < 0$ 일 때, $y = -\frac{1}{x}$</h3>
+                    <div style="width: 200px; height: 200px; border: 2px solid var(--text-dark); background: white; border-radius: 8px;">
+                        <canvas id="canvas-neg"></canvas>
+                    </div>
+                    <p class="quadrant-label">제2사분면과 제4사분면을 지난다</p>
+                    <div class="slider-container">
+                        <div style="font-size: 13px; font-weight: bold; color: var(--text-dark);">a 값 조절 (-20 ~ -1)</div>
+                        <input type="range" id="slider-neg" min="-20" max="-1" value="-1" step="1">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<script>
+function renderMath() {
+    renderMathInElement(document.body, {
+        delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\[', right: '\\]', display: true},
+            {left: '\\(', right: '\\)', display: false}
+        ],
+        throwOnError: false
+    });
+}
+
+const LEVELS = [
+    { a: 1, xValues: [-2, -1, -0.5, 0.5, 1, 2], formula: 'y = \\frac{1}{x}', color: '#EF4444' },
+    { a: 4, xValues: [-4, -2, -1, 1, 2, 4], formula: 'y = \\frac{4}{x}', color: '#F97316' },
+    { a: 6, xValues: [-6, -3, -2, -1, 1, 2, 3, 6], formula: 'y = \\frac{6}{x}', color: '#10B981' },
+    { a: -1, xValues: [-2, -1, -0.5, 0.5, 1, 2], formula: 'y = -\\frac{1}{x}', color: '#3B82F6' },
+    { a: -6, xValues: [-6, -3, -2, -1, 1, 2, 3, 6], formula: 'y = -\\frac{6}{x}', color: '#8B5CF6' }
+];
+
+let currentLevelIdx = 0;
+let completedLevels = [];
+let userPoints = []; 
+let userLines = []; 
+let isDrawingMode = false;
+let isComplete = false;
+let startPoint = null;
+
+const canvas = document.getElementById('graphCanvas');
+const ctx = canvas.getContext('2d');
+const container = document.getElementById('canvas-container');
+
+const RANGE = 6;
+let scale = 0;
+let centerX = 0;
+let centerY = 0;
+
+function initCanvas() {
+    const rect = container.getBoundingClientRect();
+    canvas.width = rect.width;
+    canvas.height = rect.height;
+    
+    // ★ 확실한 여백 확보 솔루션 ★
+    // RANGE(6) * 2 = 12칸. 여기에 상하좌우 안전 여백 2칸을 더해 14로 나눕니다.
+    // 이렇게 하면 어떤 기기에서도 숫자가 화면 밖으로 절대 나가지 않습니다.
+    const minDim = Math.min(canvas.width, canvas.height);
+    scale = minDim / 14; 
+    centerX = canvas.width / 2;
+    centerY = canvas.height / 2;
+    
+    drawGrid();
+    drawLabels();
+    if(userPoints.length > 0 || completedLevels.length > 0) drawAll();
+}
+
+function drawGrid() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    const maxLimit = Math.ceil(Math.max(canvas.width, canvas.height) / 2 / scale);
+    
+    ctx.lineWidth = 1;
+    for (let i = -maxLimit; i <= maxLimit; i += 0.5) {
+        let x = centerX + i * scale;
+        let y = centerY + i * scale;
+        
+        ctx.beginPath();
+        if (i === 0) {
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 3; 
+        } else if (i % 1 === 0) {
+            ctx.strokeStyle = '#CBD5E1';
+            ctx.lineWidth = 1.5;
+        } else {
+            ctx.strokeStyle = '#F1F5F9';
+            ctx.lineWidth = 1;
+        }
+        
+        ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height);
+        ctx.moveTo(0, y); ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+    }
+
+    ctx.font = 'bold 15px Pretendard';
+    ctx.fillStyle = '#000000'; 
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    
+    for (let i = -RANGE; i <= RANGE; i++) {
+        if (i === 0) continue;
+        ctx.fillText(i, centerX + i * scale, centerY + 18);
+        ctx.fillText(i, centerX - 18, centerY - i * scale);
+    }
+    ctx.fillText('0', centerX - 12, centerY + 18); 
+}
+
+function toCanvasX(x) { return centerX + x * scale; }
+function toCanvasY(y) { return centerY - y * scale; }
+function fromCanvasX(px) { return (px - centerX) / scale; }
+function fromCanvasY(py) { return (centerY - py) / scale; }
+
+function loadLevel() {
+    const level = LEVELS[currentLevelIdx];
+    
+    const formulaDiv = document.getElementById('formula');
+    formulaDiv.innerHTML = `$$${level.formula}$$`;
+    
+    document.getElementById('progress').innerHTML = `$y=\\frac{a}{x}$ 탐구 ${currentLevelIdx + 1}/5`;
+    updatePointCounter(0, level.xValues.length);
+    
+    const xRow = document.getElementById('x-row');
+    const yRow = document.getElementById('y-row');
+    xRow.innerHTML = '<th class="th-col">$x$</th>';
+    yRow.innerHTML = '<td class="th-col">$y$</td>';
+    
+    level.xValues.sort((a,b) => a-b).forEach(x => {
+        let y = level.a / x;
+        let xDisp = x === 0.5 ? '\\frac{1}{2}' : (x === -0.5 ? '-\\frac{1}{2}' : x);
+        let yDisp = y === 0.5 ? '\\frac{1}{2}' : (y === -0.5 ? '-\\frac{1}{2}' : y);
+        xRow.innerHTML += `<td>$${xDisp}$</td>`;
+        yRow.innerHTML += `<td>$${yDisp}$</td>`;
+    });
+
+    renderMath(); 
+
+    userPoints = [];
+    userLines = [];
+    isDrawingMode = false;
+    isComplete = false;
+    startPoint = null;
+    
+    const actionBtn = document.getElementById('action-btn');
+    actionBtn.disabled = true;
+    actionBtn.innerText = '직선 연결하기';
+    
+    showFeedback('표를 보고 알맞은 위치를 터치하세요.', false);
+    
+    drawAll(); 
+}
+
+function updatePointCounter(current, total) {
+    document.getElementById('point-counter').innerText = `${current} / ${total}`;
+}
+
+function showFeedback(msg, isError) {
+    const msgEl = document.getElementById('instruction-msg');
+    msgEl.innerHTML = msg;
+    msgEl.style.color = isError ? '#DC2626' : 'var(--text-dark)';
+    
+    if (isError) {
+        setTimeout(() => {
+            if (!isDrawingMode && !isComplete) {
+                msgEl.innerText = '표를 보고 알맞은 위치를 터치하세요.';
+                msgEl.style.color = 'var(--text-dark)';
+            }
+        }, 2000);
+    }
+}
+
+function getEventPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    let clientX = e.clientX;
+    let clientY = e.clientY;
+    
+    if (e.touches && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+    }
+    
+    return { px: clientX - rect.left, py: clientY - rect.top };
+}
+
+container.addEventListener('mousedown', handlePointerDown);
+container.addEventListener('touchstart', (e) => { e.preventDefault(); handlePointerDown(e); }, {passive: false});
+
+function handlePointerDown(e) {
+    if (isComplete) return;
+    const { px, py } = getEventPos(e);
+    
+    if (!isDrawingMode) {
+        handlePointClick(px, py);
+    } else {
+        startDragging(px, py);
+    }
+}
+
+function handlePointClick(px, py) {
+    const lx = Math.round(fromCanvasX(px) * 2) / 2;
+    const ly = Math.round(fromCanvasY(py) * 2) / 2;
+    const level = LEVELS[currentLevelIdx];
+    const totalPoints = level.xValues.length;
+    
+    if (lx === 0) {
+        showFeedback('x=0일 때 y값은 정할 수 없어요!', true);
+        return;
+    }
+
+    const isCorrectX = level.xValues.includes(lx);
+    const isCorrectY = Math.abs(level.a / lx - ly) < 0.01;
+
+    if (isCorrectX && isCorrectY) {
+        if (!userPoints.find(p => p.lx === lx)) {
+            userPoints.push({x: toCanvasX(lx), y: toCanvasY(ly), lx, ly});
+            updatePointCounter(userPoints.length, totalPoints);
+            drawAll();
+            
+            if (userPoints.length === totalPoints) {
+                document.getElementById('action-btn').disabled = false;
+                showFeedback('모든 점을 찾았어요! [직선 연결하기]를 누르세요.', false);
+            }
+        }
+    } else {
+        showFeedback('아쉽네요, x와 y의 값을 다시 확인해 볼까요?', true);
+    }
+}
+
+function startDragging(px, py) {
+    const point = userPoints.find(p => Math.hypot(p.x - px, p.y - py) < 25);
+    if (point) startPoint = point;
+}
+
+window.addEventListener('mousemove', handlePointerMove);
+window.addEventListener('touchmove', (e) => { 
+    if(e.target === canvas) e.preventDefault(); 
+    handlePointerMove(e); 
+}, {passive: false});
+
+function handlePointerMove(e) {
+    if (!startPoint || !isDrawingMode) return;
+    const { px, py } = getEventPos(e);
+    
+    drawAll();
+    ctx.beginPath();
+    ctx.strokeStyle = '#94A3B8';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([5, 5]);
+    ctx.moveTo(startPoint.x, startPoint.y);
+    ctx.lineTo(px, py);
+    ctx.stroke();
+    ctx.setLineDash([]);
+}
+
+window.addEventListener('mouseup', handlePointerUp);
+window.addEventListener('touchend', handlePointerUp);
+
+function handlePointerUp(e) {
+    if (!startPoint || !isDrawingMode) return;
+    
+    let px, py;
+    const rect = canvas.getBoundingClientRect();
+    if(e.changedTouches && e.changedTouches.length > 0) {
+        px = e.changedTouches[0].clientX - rect.left;
+        py = e.changedTouches[0].clientY - rect.top;
+    } else {
+        px = e.clientX - rect.left;
+        py = e.clientY - rect.top;
+    }
+    
+    const endPoint = userPoints.find(p => Math.hypot(p.x - px, p.y - py) < 25);
+    
+    if (endPoint && endPoint !== startPoint) {
+        if (Math.sign(startPoint.lx) === Math.sign(endPoint.lx)) {
+            const alreadyExists = userLines.find(l => 
+                (l[0] === startPoint && l[1] === endPoint) || 
+                (l[0] === endPoint && l[1] === startPoint)
+            );
+            if (!alreadyExists) {
+                userLines.push([startPoint, endPoint]);
+                if (userLines.length >= userPoints.length - 2) {
+                    finishLevel();
+                }
+            }
+        } else {
+            showFeedback('x가 음수인 점끼리, 양수인 점끼리 따로 이어주세요', true);
+        }
+    }
+    startPoint = null;
+    drawAll();
+}
+
+function drawLabels() {
+    const labelsContainer = document.getElementById('graph-labels-container');
+    labelsContainer.innerHTML = '';
+    
+    const levelsToLabel = [...completedLevels];
+    if (isComplete) levelsToLabel.push(currentLevelIdx);
+
+    levelsToLabel.forEach(idx => {
+        const level = LEVELS[idx];
+        const isPrevious = idx !== currentLevelIdx; 
+        
+        const div = document.createElement('div');
+        div.style.position = 'absolute';
+        
+        const lx = 4;
+        const ly = level.a / lx;
+        
+        div.style.left = toCanvasX(lx) + 12 + 'px';
+        div.style.top = toCanvasY(ly) - 20 + 'px';
+        div.innerHTML = `$${level.formula}$`;
+        div.style.color = level.color;
+        div.style.fontSize = isPrevious ? '15px' : '17px';
+        div.style.fontWeight = 'bold';
+        div.style.backgroundColor = 'rgba(255, 255, 255, 0.85)';
+        div.style.padding = '3px 6px';
+        div.style.borderRadius = '6px';
+        div.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+        
+        if (isPrevious) {
+            div.style.opacity = '0.45'; 
+        }
+        
+        labelsContainer.appendChild(div);
+    });
+    
+    renderMathInElement(labelsContainer, {
+        delimiters: [{left: '$', right: '$', display: false}],
+        throwOnError: false
+    });
+}
+
+function drawAll() {
+    drawGrid();
+    
+    ctx.globalAlpha = 0.25; 
+    completedLevels.forEach(idx => {
+        const level = LEVELS[idx];
+        drawSmoothCurve(ctx, canvas, level.a, level.color, 3);
+    });
+    ctx.globalAlpha = 1.0; 
+    
+    const currentColor = LEVELS[currentLevelIdx].color;
+
+    ctx.beginPath();
+    ctx.strokeStyle = currentColor; 
+    ctx.lineWidth = 2;
+    userLines.forEach(line => {
+        ctx.moveTo(line[0].x, line[0].y);
+        ctx.lineTo(line[1].x, line[1].y);
+    });
+    ctx.stroke();
+
+    userPoints.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 8, 0, Math.PI * 2);
+        ctx.fillStyle = currentColor; 
+        ctx.fill();
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    });
+
+    if (isComplete) {
+        drawSmoothCurve(ctx, canvas, LEVELS[currentLevelIdx].a, currentColor, 4);
+    }
+    
+    drawLabels();
+}
+
+document.getElementById('action-btn').addEventListener('click', () => {
+    if (isComplete) {
+        completedLevels.push(currentLevelIdx);
+        currentLevelIdx++;
+        
+        if (currentLevelIdx < LEVELS.length) {
+            loadLevel();
+        } else {
+            showSummary();
+        }
+    } else {
+        isDrawingMode = true;
+        document.getElementById('action-btn').disabled = true;
+        showFeedback('점과 점 사이를 차례대로 드래그하여 선분으로 이어보세요!', false);
+    }
+});
+
+document.getElementById('reset-btn').addEventListener('click', loadLevel);
+
+function finishLevel() {
+    isComplete = true;
+    isDrawingMode = false;
+    drawAll();
+    
+    showFeedback('훌륭해요! 점들을 더 촘촘히 찍는다면 곡선이 됩니다.', false);
+    
+    const actionBtn = document.getElementById('action-btn');
+    actionBtn.innerText = '다음 그래프 넘어가기';
+    actionBtn.disabled = false;
+}
+
+function drawSmoothCurve(targetCtx, targetCanvas, a, color, width) {
+    targetCtx.beginPath();
+    targetCtx.strokeStyle = color;
+    targetCtx.lineWidth = width;
+
+    let first = true;
+    for (let x = 0.05; x <= RANGE; x += 0.05) {
+        let y = a / x;
+        if (Math.abs(y) > RANGE + 1) continue;
+        let px = centerX + x * scale;
+        let py = centerY - y * scale;
+        if (first) { targetCtx.moveTo(px, py); first = false; }
+        else targetCtx.lineTo(px, py);
+    }
+    targetCtx.stroke();
+
+    targetCtx.beginPath();
+    first = true;
+    for (let x = -RANGE; x <= -0.05; x += 0.05) {
+        let y = a / x;
+        if (Math.abs(y) > RANGE + 1) continue;
+        let px = centerX + x * scale;
+        let py = centerY - y * scale;
+        if (first) { targetCtx.moveTo(px, py); first = false; }
+        else targetCtx.lineTo(px, py);
+    }
+    targetCtx.stroke();
+}
+
+function showSummary() {
+    document.getElementById('step1-view').style.display = 'none';
+    const step2 = document.getElementById('step2-view');
+    step2.style.display = 'flex';
+    
+    updatePosGraph(1);
+    updateNegGraph(-1);
+}
+
+const sliderPos = document.getElementById('slider-pos');
+const sliderNeg = document.getElementById('slider-neg');
+
+sliderPos.addEventListener('input', (e) => {
+    updatePosGraph(parseInt(e.target.value));
+});
+
+sliderNeg.addEventListener('input', (e) => {
+    updateNegGraph(parseInt(e.target.value));
+});
+
+function drawSummaryCanvas(can, valA) {
+    const c = can.getContext('2d');
+    // 요약 화면 크기 200px 설정
+    can.width = 200; 
+    can.height = 200;
+    const s = 200 / (RANGE * 2 + 1);
+    const mid = 100;
+    
+    c.clearRect(0, 0, 200, 200);
+    
+    c.lineWidth = 1;
+    for (let i = -RANGE; i <= RANGE; i++) {
+        c.beginPath();
+        if (i === 0) {
+            c.strokeStyle = '#000000'; 
+            c.lineWidth = 2;
+        } else {
+            c.strokeStyle = '#E2E8F0';
+            c.lineWidth = 1;
+        }
+        c.moveTo(mid + i*s, 0); c.lineTo(mid + i*s, 200);
+        c.moveTo(0, mid - i*s); c.lineTo(200, mid - i*s);
+        c.stroke();
+    }
+    
+    c.font = '11px Pretendard';
+    c.fillStyle = '#94A3B8';
+    c.fillText('제1사분면', 200 - 55, 18);
+    c.fillText('제2사분면', 8, 18);
+    c.fillText('제3사분면', 8, 200 - 8);
+    c.fillText('제4사분면', 200 - 55, 200 - 8);
+    
+    const color = valA > 0 ? '#4F46E5' : '#EA580C';
+    c.beginPath(); c.strokeStyle = color; c.lineWidth = 3;
+    let first = true;
+    for(let x = 0.05; x <= RANGE; x += 0.05) {
+        let y = valA / x; 
+        if(Math.abs(y) > RANGE + 1) continue;
+        if(first) { c.moveTo(mid + x*s, mid - y*s); first = false; }
+        else c.lineTo(mid + x*s, mid - y*s);
+    }
+    c.stroke();
+    
+    c.beginPath(); first = true;
+    for(let x = -RANGE; x <= -0.05; x += 0.05) {
+        let y = valA / x; 
+        if(Math.abs(y) > RANGE + 1) continue;
+        if(first) { c.moveTo(mid + x*s, mid - y*s); first = false; }
+        else c.lineTo(mid + x*s, mid - y*s);
+    }
+    c.stroke();
+}
+
+function updatePosGraph(a) {
+    const canvasP = document.getElementById('canvas-pos');
+    drawSummaryCanvas(canvasP, a);
+    
+    const titlePos = document.getElementById('title-pos');
+    titlePos.innerHTML = `$a > 0$ 일 때, $y = \\frac{${a}}{x}$`;
+    renderMathInElement(titlePos, { delimiters: [{left: '$', right: '$', display: false}] });
+}
+
+function updateNegGraph(a) {
+    const canvasN = document.getElementById('canvas-neg');
+    drawSummaryCanvas(canvasN, a);
+    
+    const titleNeg = document.getElementById('title-neg');
+    titleNeg.innerHTML = `$a < 0$ 일 때, $y = -\\frac{${Math.abs(a)}}{x}$`;
+    renderMathInElement(titleNeg, { delimiters: [{left: '$', right: '$', display: false}] });
+}
+
+window.onload = () => {
+    initCanvas();
+    loadLevel();
+    renderMath(); 
+};
+
+window.onresize = () => {
+    initCanvas();
+};
+</script>
+
+</body>
+</html>
