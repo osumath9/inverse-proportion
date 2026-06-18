@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>반비례 리모콘</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
+</head>
+<body class="bg-orange-50 p-8 font-sans">
+    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-orange-200">
+            <h2 class="text-2xl font-bold mb-4 text-orange-800">📙 반비례 리모콘</h2>
+            <button onclick="changeActivity('attention')" class="w-full p-5 bg-red-600 hover:bg-red-700 text-white font-extrabold text-xl rounded-xl transition shadow-md mb-6 flex items-center justify-center gap-2">
+                🚨 모두 주목 (화면 잠금)
+            </button>
+            <h3 class="text-lg font-bold mb-3 text-gray-700">📚 활동 선택</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <button onclick="changeActivity('inverse-proportion.html')" class="p-4 bg-orange-100 hover:bg-orange-200 text-orange-900 rounded-xl font-bold transition border border-orange-300">반비례 알아보기</button>
+                <button onclick="changeActivity('inverse-proportion-graph.html')" class="p-4 bg-orange-100 hover:bg-orange-200 text-orange-900 rounded-xl font-bold transition border border-orange-300">반비례 그래프</button>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-lg border-2 border-gray-200">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-gray-800">👀 접속자 (<span id="student-count">0</span>명)</h2>
+                <button onclick="removeAllStudents()" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-bold rounded-lg text-sm shadow">🧹 전체 초기화</button>
+            </div>
+            <ul id="student-list" class="space-y-3"></ul>
+        </div>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyC5q-AaJne0xZyjCpgNEkxTXdDLduBXXUM",
+            authDomain: "proportion-f12a4.firebaseapp.com",
+            databaseURL: "https://proportion-f12a4-default-rtdb.firebaseio.com",
+            projectId: "proportion-f12a4",
+            storageBucket: "proportion-f12a4.firebasestorage.app",
+            messagingSenderId: "990166402073",
+            appId: "1:990166402073:web:a9d120121f5b5ed67ed688"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        function changeActivity(filename) {
+            db.ref('inverseApp/currentActivity').set(filename);
+            if(filename === 'attention') alert("화면을 잠궜습니다.");
+        }
+
+        function removeAllStudents() {
+            if (confirm("정말 모든 명단을 초기화하시겠습니까?")) db.ref('inverseApp/students').remove();
+        }
+
+        db.ref('inverseApp/students').on('value', (snapshot) => {
+            const list = document.getElementById('student-list');
+            list.innerHTML = ''; let count = 0;
+            snapshot.forEach((child) => {
+                const student = child.val(); count++;
+                const isIdle = student.status === "딴짓 중...";
+                const li = document.createElement('li');
+                li.className = `flex justify-between items-center p-3 rounded-lg border ${isIdle ? 'border-red-400 bg-red-50' : 'border-gray-200 bg-gray-50'}`;
+                li.innerHTML = `<span class="font-bold">${student.name}</span><span class="${isIdle ? 'text-red-600 font-bold' : 'text-green-600 font-bold'}">${student.status}</span>`;
+                list.appendChild(li);
+            });
+            document.getElementById('student-count').innerText = count;
+        });
+    </script>
+</body>
+</html>
