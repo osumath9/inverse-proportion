@@ -63,13 +63,11 @@
         .math-table tr:last-child td { border-bottom: none; }
         .math-table tr th:first-child, .math-table tr td:first-child { border-left: none; }
         .math-table tr th:last-child, .math-table tr td:last-child { border-right: none; }
-        
         .bg-table-header { background-color: #f8fafc; }
         
         /* 색상 유틸리티 */
-        .text-primary { color: #4338ca; } /* 진한 파랑 */
-        .text-accent-x { color: #3b82f6; } /* x축 파랑 */
-        .text-accent-y { color: #3b82f6; } /* y축 파랑 */
+        .text-primary { color: #4338ca; }
+        .text-accent-x, .text-accent-y { color: #3b82f6; }
         .bg-primary { background-color: #5a67d8; }
         .hover-bg-primary:hover { background-color: #4338ca; }
 
@@ -93,81 +91,37 @@
         .step-separator { color: #cbd5e1; margin: 0 0.1rem; }
 
         /* SVG & 화살표 라벨 영역 */
-        .overlay-container {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 10;
-        }
-        .svg-canvas {
-            width: 100%;
-            height: 100%;
-            overflow: visible;
-        }
+        .overlay-container { position: absolute; inset: 0; pointer-events: none; z-index: 10; }
+        .svg-canvas { width: 100%; height: 100%; overflow: visible; }
         .arrow-label {
-            position: absolute;
-            font-size: 0.9rem;
-            font-weight: 800;
-            padding: 0.15rem 0.6rem;
-            border-radius: 1rem;
-            background-color: white;
-            border: 2px solid;
-            transform: translate(-50%, -50%);
-            white-space: nowrap;
+            position: absolute; font-size: 0.9rem; font-weight: 800; padding: 0.15rem 0.6rem;
+            border-radius: 1rem; background-color: white; border: 2px solid;
+            transform: translate(-50%, -50%); white-space: nowrap;
         }
         .label-x { color: #3b82f6; border-color: #3b82f6; }
         .label-y { color: #e11d48; border-color: #e11d48; }
         .label-err { color: #ef4444; border-color: #ef4444; }
 
+        /* 버튼 및 기타 UI */
         .o-x-btn {
-            flex: 1;
-            padding: 1rem;
-            border-radius: 1rem;
-            border: 2px solid #e2e8f0;
-            background-color: white;
-            font-weight: 700;
-            font-size: 1.125rem;
-            color: #475569;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            cursor: pointer;
+            flex: 1; padding: 1rem; border-radius: 1rem; border: 2px solid #e2e8f0;
+            background-color: white; font-weight: 700; font-size: 1.125rem; color: #475569;
+            transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer;
         }
-        .btn-yes:hover { border-color: #3b82f6; background-color: #eff6ff; color: #1d4ed8; }
-        .btn-no:hover { border-color: #ef4444; background-color: #fef2f2; color: #b91c1c; }
-        .btn-yes.selected { border-color: #3b82f6; background-color: #eff6ff; color: #1d4ed8; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
-        .btn-no.selected { border-color: #ef4444; background-color: #fef2f2; color: #b91c1c; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+        .btn-yes:hover, .btn-yes.selected { border-color: #3b82f6; background-color: #eff6ff; color: #1d4ed8; }
+        .btn-no:hover, .btn-no.selected { border-color: #ef4444; background-color: #fef2f2; color: #b91c1c; }
         .btn-disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
 
-        /* 오답 시 버튼 흔들림 애니메이션 추가 */
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-5px); }
-            40% { transform: translateX(5px); }
-            60% { transform: translateX(-5px); }
-            80% { transform: translateX(5px); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
         }
-        .wrong-shake { 
-            animation: shake 0.4s ease-in-out; 
-            border-color: #ef4444 !important; 
-            background-color: #fef2f2 !important; 
-            color: #b91c1c !important; 
-        }
+        .wrong-shake { animation: shake 0.4s ease-in-out; border-color: #ef4444 !important; background-color: #fef2f2 !important; color: #b91c1c !important; }
 
         .input-cell {
-            width: 60px;
-            height: 38px;
-            text-align: center;
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #3b82f6;
-            border: 2px solid #cbd5e1;
-            border-radius: 0.5rem;
-            outline: none;
-            transition: all 0.2s;
-            background: #fffbeb;
+            width: 60px; height: 38px; text-align: center; font-size: 1.15rem; font-weight: 700;
+            color: #3b82f6; border: 2px solid #cbd5e1; border-radius: 0.5rem; outline: none; transition: all 0.2s; background: #fffbeb;
         }
         .input-cell:focus { border-color: #3b82f6; background: white; }
         .input-correct { border-color: #10b981 !important; background: #ecfdf5 !important; color: #047857; }
@@ -182,7 +136,6 @@
                 <span class="text-2xl">⚖️</span>
                 <h1 class="text-2xl font-black text-[#2e3477]">반비례 마스터하기</h1>
             </div>
-            
             <div class="flex items-center bg-white border border-slate-200 rounded-lg p-1.5 shadow-sm">
                 <div id="nav-1" class="step-item step-active" onclick="switchPhase(1)">1. 반비례 뜻</div>
                 <span class="step-separator">›</span>
@@ -195,23 +148,18 @@
 
     <main class="flex-grow w-full px-4 pb-24">
         
-        <!-- ========================================== -->
         <!-- PHASE 1: 반비례 뜻 확인하기 -->
-        <!-- ========================================== -->
         <section id="phase-1" class="fade-in">
             <div class="main-card space-y-6 text-center">
                 <div class="space-y-3">
                     <h2 class="text-3xl font-black text-primary">반비례란 무엇일까요?</h2>
                     <p class="text-slate-500 font-medium text-lg">아래 표의 규칙을 관찰해 보세요.</p>
                 </div>
-
-                <!-- 인터랙티브 테이블 및 화살표 영역 -->
                 <div class="relative w-full max-w-3xl mx-auto pt-10 pb-10">
                     <div class="overlay-container">
                         <svg id="p1-svg" class="svg-canvas"></svg>
                         <div id="p1-labels"></div>
                     </div>
-
                     <table class="math-table relative z-10">
                         <tbody>
                             <tr class="bg-table-header">
@@ -231,7 +179,6 @@
                         </tbody>
                     </table>
                 </div>
-
                 <div class="bg-[#eff4ff] rounded-2xl p-6 mx-auto max-w-2xl border border-blue-100 shadow-sm text-left">
                     <p class="text-lg leading-relaxed font-medium text-slate-700">
                         위 표처럼 <span class="font-bold text-slate-800">x</span>의 값이 <span class="font-bold text-blue-600">2배, 3배, 4배...</span> 로 변함에 따라<br>
@@ -239,33 +186,23 @@
                         <span class="bg-primary text-white px-3 py-1 rounded-md font-bold inline-block mt-2">반비례</span> 한다고 합니다.
                     </p>
                 </div>
-
-                <button onclick="unlockAndSwitch(2)" class="bg-primary hover-bg-primary text-white font-bold py-4 px-10 rounded-xl text-lg shadow-md transition-all mt-4 inline-flex items-center gap-2">
-                    이해했어요! 판단 연습하러 가기 <span class="text-xl">→</span>
+                <button id="btn-phase1-next" onclick="unlockAndSwitch(2)" disabled class="bg-slate-300 text-slate-500 font-bold py-4 px-10 rounded-xl text-lg shadow-md transition-all mt-4 inline-flex items-center gap-2 cursor-not-allowed">
+                    개념을 읽어보세요 (10초)
                 </button>
             </div>
         </section>
 
-        <!-- ========================================== -->
-        <!-- PHASE 2: 반비례 판단 연습하기 (총 5문제) -->
-        <!-- ========================================== -->
+        <!-- PHASE 2: 반비례 판단 연습하기 -->
         <section id="phase-2" class="hidden fade-in">
             <div class="main-card space-y-5 text-center">
                 <div class="flex items-center justify-between">
-                    <h2 class="text-3xl font-black text-primary flex items-center gap-2">
-                        <span>🔍</span> 반비례 판단 연습하기
-                    </h2>
-                    <div class="bg-slate-200 text-slate-600 px-4 py-1.5 rounded-full font-bold text-sm">
-                        <span id="p2-progress">1</span> / 5
-                    </div>
+                    <h2 class="text-3xl font-black text-primary flex items-center gap-2"><span>🔍</span> 반비례 판단 연습하기</h2>
+                    <div class="bg-slate-200 text-slate-600 px-4 py-1.5 rounded-full font-bold text-sm"><span id="p2-progress">1</span> / 5</div>
                 </div>
-                
-                <!-- 문제 렌더링 영역 -->
                 <div class="bg-white border-2 border-slate-100 rounded-2xl p-6 relative max-w-3xl mx-auto shadow-sm mt-2">
                     <div class="bg-blue-50 border border-blue-100 text-slate-800 px-6 py-3 rounded-xl font-bold text-lg mb-8 text-center shadow-sm">
                         아래 표의 화살표 관계를 자세히 보고, 이 관계가 반비례인지 판단해보세요.
                     </div>
-                    
                     <div class="relative pt-10 pb-10">
                         <div class="overlay-container">
                             <svg id="p2-svg" class="svg-canvas"></svg>
@@ -275,58 +212,38 @@
                             <tbody>
                                 <tr class="bg-table-header">
                                     <td class="w-1/5"><span class="italic text-slate-700 font-serif">x</span></td>
-                                    <td id="p2-x-1" class="w-1/5 text-slate-800"></td>
-                                    <td id="p2-x-2" class="w-1/5 text-slate-800"></td>
-                                    <td id="p2-x-3" class="w-1/5 text-slate-800"></td>
-                                    <td id="p2-x-4" class="w-1/5 text-slate-800"></td>
+                                    <td id="p2-x-1" class="w-1/5 text-slate-800"></td><td id="p2-x-2" class="w-1/5 text-slate-800"></td>
+                                    <td id="p2-x-3" class="w-1/5 text-slate-800"></td><td id="p2-x-4" class="w-1/5 text-slate-800"></td>
                                 </tr>
                                 <tr>
                                     <td class="w-1/5"><span class="italic text-accent-y font-serif">y</span></td>
-                                    <td id="p2-y-1" class="text-accent-y"></td>
-                                    <td id="p2-y-2" class="text-accent-y"></td>
-                                    <td id="p2-y-3" class="text-accent-y"></td>
-                                    <td id="p2-y-4" class="text-accent-y"></td>
+                                    <td id="p2-y-1" class="text-accent-y"></td><td id="p2-y-2" class="text-accent-y"></td>
+                                    <td id="p2-y-3" class="text-accent-y"></td><td id="p2-y-4" class="text-accent-y"></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
-
-                <!-- O/X 선택 버튼 -->
                 <div class="flex justify-center gap-6 max-w-2xl mx-auto">
-                    <button id="p2-btn-yes" class="o-x-btn btn-yes">⭕ 반비례 맞음</button>
-                    <button id="p2-btn-no" class="o-x-btn btn-no">❌ 반비례 아님</button>
+                    <button id="p2-btn-yes" class="o-x-btn btn-yes" onclick="handleOXChoice(2, true)">⭕ 반비례 맞음</button>
+                    <button id="p2-btn-no" class="o-x-btn btn-no" onclick="handleOXChoice(2, false)">❌ 반비례 아님</button>
                 </div>
-                
-                <!-- 피드백 & 다음 버튼 -->
                 <div id="p2-feedback-area" class="min-h-[5rem] mt-3 flex flex-col items-center justify-center transition-opacity opacity-0">
                     <div id="p2-feedback-msg" class="text-lg font-bold mb-3 flex flex-col items-center text-center"></div>
-                    <button id="p2-btn-next" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-8 rounded-xl shadow-md transition-all hidden animate-bounce">
-                        다음 문제로
-                    </button>
+                    <button id="p2-btn-next" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-8 rounded-xl shadow-md transition-all hidden animate-bounce"></button>
                 </div>
             </div>
         </section>
 
-        <!-- ========================================== -->
-        <!-- PHASE 3: 실전 문제 풀어보기 (총 3문제) -->
-        <!-- ========================================== -->
+        <!-- PHASE 3: 실전 문제 풀어보기 -->
         <section id="phase-3" class="hidden fade-in">
             <div class="main-card space-y-5 text-center">
                 <div class="flex items-center justify-between">
-                    <h2 class="text-3xl font-black text-primary flex items-center gap-2">
-                        <span>🔍</span> 실전 문제 풀어보기
-                    </h2>
-                    <div class="bg-slate-200 text-slate-600 px-4 py-1.5 rounded-full font-bold text-sm">
-                        실전 <span id="p3-progress">1</span> / 3
-                    </div>
+                    <h2 class="text-3xl font-black text-primary flex items-center gap-2"><span>🔍</span> 실전 문제 풀어보기</h2>
+                    <div class="bg-slate-200 text-slate-600 px-4 py-1.5 rounded-full font-bold text-sm">실전 <span id="p3-progress">1</span> / 3</div>
                 </div>
-                
-                <!-- 파란색 네모 창틀 디자인 -->
                 <div class="bg-white border-4 border-blue-500 rounded-3xl p-6 relative max-w-3xl mx-auto shadow-md text-left transition-all mt-2">
-                    <div id="p3-desc" class="bg-blue-50 border border-blue-100 text-slate-800 px-6 py-3 rounded-xl font-bold text-[1.05rem] mb-8 text-center leading-relaxed shadow-sm">
-                        상황 설명
-                    </div>
+                    <div id="p3-desc" class="bg-blue-50 border border-blue-100 text-slate-800 px-6 py-3 rounded-xl font-bold text-[1.05rem] mb-8 text-center leading-relaxed shadow-sm"></div>
                     
                     <div class="relative pt-10 pb-10">
                         <div class="overlay-container">
@@ -337,60 +254,43 @@
                             <tbody>
                                 <tr class="bg-table-header">
                                     <td class="w-1/5"><span class="italic text-slate-700 font-serif">x</span></td>
-                                    <td id="p3-x-1" class="w-1/5 text-slate-800"></td>
-                                    <td id="p3-x-2" class="w-1/5 text-slate-800"></td>
-                                    <td id="p3-x-3" class="w-1/5 text-slate-800"></td>
-                                    <td id="p3-x-4" class="w-1/5 text-slate-800"></td>
+                                    <td id="p3-x-1" class="w-1/5 text-slate-800"></td><td id="p3-x-2" class="w-1/5 text-slate-800"></td>
+                                    <td id="p3-x-3" class="w-1/5 text-slate-800"></td><td id="p3-x-4" class="w-1/5 text-slate-800"></td>
                                 </tr>
                                 <tr>
                                     <td class="w-1/5"><span class="italic text-accent-y font-serif">y</span></td>
-                                    <td id="p3-y-1" class="text-accent-y"></td>
-                                    <td id="p3-y-2" class="text-accent-y"></td>
-                                    <td id="p3-y-3" class="text-accent-y"></td>
-                                    <td id="p3-y-4" class="text-accent-y"></td>
+                                    <td id="p3-y-1" class="text-accent-y"></td><td id="p3-y-2" class="text-accent-y"></td>
+                                    <td id="p3-y-3" class="text-accent-y"></td><td id="p3-y-4" class="text-accent-y"></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-
-                    <!-- 입력 확인 1단계 -->
+                    <!-- 입력 확인 -->
                     <div id="p3-check-area" class="text-center mt-6">
                         <div id="p3-input-err" class="text-red-500 font-bold text-sm mb-3 hidden">빈칸을 모두 올바르게 채워주세요!</div>
-                        <button id="p3-btn-check" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-8 rounded-xl shadow-md transition-all">
-                            표 완성하기
-                        </button>
+                        <button id="p3-btn-check" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-8 rounded-xl shadow-md transition-all">표 완성하기</button>
                     </div>
-
-                    <!-- O/X 판단 2단계 (표 완성 후 노출) -->
+                    <!-- O/X 판단 -->
                     <div id="p3-ox-area" class="hidden mt-6 border-t border-slate-100 pt-6 fade-in">
                         <h4 class="text-center font-bold text-slate-800 mb-5 text-lg">완성된 표를 보니, 이 상황은 반비례가 맞을까요?</h4>
                         <div class="flex justify-center gap-6 max-w-2xl mx-auto">
-                            <button id="p3-btn-yes" class="o-x-btn btn-yes">⭕ 반비례 맞음</button>
-                            <button id="p3-btn-no" class="o-x-btn btn-no">❌ 반비례 아님</button>
+                            <button id="p3-btn-yes" class="o-x-btn btn-yes" onclick="handleOXChoice(3, true)">⭕ 반비례 맞음</button>
+                            <button id="p3-btn-no" class="o-x-btn btn-no" onclick="handleOXChoice(3, false)">❌ 반비례 아님</button>
                         </div>
                     </div>
                 </div>
-
                 <div id="p3-feedback-area" class="min-h-[5rem] flex flex-col items-center justify-center transition-opacity opacity-0 mt-3">
                     <div id="p3-feedback-msg" class="text-lg font-bold mb-3 flex flex-col items-center text-center"></div>
-                    <button id="p3-btn-next" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-8 rounded-xl shadow-md transition-all hidden animate-bounce">
-                        다음 실전으로
-                    </button>
+                    <button id="p3-btn-next" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 px-8 rounded-xl shadow-md transition-all hidden animate-bounce"></button>
                 </div>
             </div>
         </section>
 
-        <!-- ========================================== -->
         <!-- PHASE 4: 요약 정리 -->
-        <!-- ========================================== -->
         <section id="phase-4" class="hidden fade-in">
             <div class="main-card space-y-6 text-center">
-                <h2 class="text-3xl font-black text-primary flex items-center justify-center gap-2">
-                    <span>🎉</span> 반비례 완벽 정리!
-                </h2>
-                
+                <h2 class="text-3xl font-black text-primary flex items-center justify-center gap-2"><span>🎉</span> 반비례 완벽 정리!</h2>
                 <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6 text-left space-y-6 shadow-sm max-w-2xl mx-auto mt-4">
-                    <!-- 의미 -->
                     <div>
                         <h3 class="text-xl font-bold text-slate-800 mb-3">📌 반비례의 뜻</h3>
                         <p class="text-[1.15rem] text-slate-700 leading-relaxed bg-white p-5 rounded-xl shadow-sm border border-slate-100">
@@ -398,8 +298,6 @@
                             \(y\)의 값은 <span class="font-bold text-red-600">\(\frac{1}{2}\)배, \(\frac{1}{3}\)배, \(\frac{1}{4}\)배...</span> 로 변하는 관계
                         </p>
                     </div>
-                    
-                    <!-- 공식 -->
                     <div>
                         <h3 class="text-xl font-bold text-slate-800 mb-3">📌 관계식</h3>
                         <p class="text-[1.15rem] text-slate-700 bg-white p-5 rounded-xl shadow-sm border border-slate-100 text-center">
@@ -407,8 +305,6 @@
                             <span class="text-slate-500 text-base ml-2">(단, \(a \neq 0\))</span>
                         </p>
                     </div>
-
-                    <!-- 특징 -->
                     <div>
                         <h3 class="text-xl font-bold text-slate-800 mb-3">📌 중요한 특징</h3>
                         <p class="text-[1.15rem] text-slate-700 leading-relaxed bg-white p-5 rounded-xl shadow-sm border border-slate-100">
@@ -417,7 +313,6 @@
                         </p>
                     </div>
                 </div>
-
                 <button onclick="location.reload()" class="bg-slate-800 hover:bg-slate-700 text-white font-bold py-4 px-10 rounded-xl text-lg shadow-md transition-all mt-8 inline-flex items-center gap-2">
                     처음부터 다시하기 ↺
                 </button>
@@ -428,538 +323,246 @@
 
     <script>
         // ==========================================
-        // 글로벌 상태 관리
+        // 1. 공통 및 데이터 관리
         // ==========================================
         let currentPhase = 1;
         let unlocked = { 1: true, 2: false, 3: false, 4: false };
 
+        const p2Stages = [
+            { x: [1, 2, 3, 4], y: [12, 6, 4, 3], arrowsY: ['\\(\\frac{1}{2}\\)배', '\\(\\frac{1}{3}\\)배', '\\(\\frac{1}{4}\\)배'], typeY: 'correct', isInverse: true, a: 12 },
+            { x: [1, 2, 3, 4], y: [9, 8, 7, 6], arrowsY: ['-1', '-2', '-3'], typeY: 'wrong', isInverse: false, fbDesc: "비율이 일정하게 감소하지 않으므로 반비례가 아닙니다." },
+            { x: [1, 2, 4, 5], y: [20, 10, 5, 4], arrowsY: ['\\(\\frac{1}{2}\\)배', '\\(\\frac{1}{4}\\)배', '\\(\\frac{1}{5}\\)배'], typeY: 'correct', isInverse: true, a: 20 },
+            { x: [1, 2, 3, 4], y: [500, 1000, 1500, 2000], arrowsY: ['2배', '3배', '4배'], typeY: 'wrong', isInverse: false, fbDesc: "반비례 관계가 아닌 정비례 관계입니다." },
+            { x: [10, 20, 50, 100], y: [10, 5, 2, 1], arrowsY: ['\\(\\frac{1}{2}\\)배', '\\(\\frac{1}{5}\\)배', '\\(\\frac{1}{10}\\)배'], typeY: 'correct', isInverse: true, a: 100 }
+        ];
+
+        const p3Stages = [
+            { desc: "용돈 30,000원을 친구 \\(x\\)명이 똑같이 나누어 가질 때 1명이 받는 돈 \\(y\\)원 사이의 관계식 \\(y=\\frac{30000}{x}\\)에 맞게 채우세요.", x: [1, 2, 3, 4], y: [30000, 15000, 10000, 7500], blanks: [false, true, true, true], isInverse: true, a: 30000 },
+            { desc: "1분에 12L씩 물이 나오는 호스로 수조에 물을 받을 때, 시간 \\(x\\)분과 채워진 물의 양 \\(y\\)L 사이의 관계식 \\(y=12x\\)에 맞게 채우세요.", x: [1, 2, 3, 4], y: [12, 24, 36, 48], blanks: [false, true, true, true], isInverse: false, fbDesc: "반비례 관계가 아닌 정비례 관계입니다." },
+            { desc: "총 120쪽인 책을 매일 \\(x\\)쪽씩 읽을 때, 책을 다 읽는 데 걸리는 일수 \\(y\\)일 사이의 관계식 \\(y=\\frac{120}{x}\\)에 맞게 채우세요.", x: [10, 20, 30, 40], y: [12, 6, 4, 3], blanks: [false, true, true, true], isInverse: true, a: 120 }
+        ];
+
+        let p2Idx = 0, p3Idx = 0, p2Answered = false, p3Answered = false, p3TableChecked = false;
+        let p2Data = null, p3Data = null;
+
+        // ==========================================
+        // 2. 화면 전환 함수
+        // ==========================================
         function switchPhase(phase) {
             if (!unlocked[phase]) return;
             currentPhase = phase;
             
-            // 상단 네비게이션 스타일 갱신 (nav-4는 존재하지 않으므로 DOM 탐색 시 오류 방지 처리)
             [1, 2, 3, 4].forEach(p => {
                 document.getElementById(`phase-${p}`).classList.add('hidden');
                 const nav = document.getElementById(`nav-${p}`);
-                if (nav) {
-                    if (p === phase) {
-                        nav.className = 'step-item step-active';
-                    } else {
-                        nav.className = `step-item ${unlocked[p] ? 'text-slate-600 hover:bg-slate-50' : 'text-slate-400 opacity-50 cursor-not-allowed'}`;
-                    }
-                }
+                if (nav) nav.className = p === phase ? 'step-item step-active' : `step-item ${unlocked[p] ? 'text-slate-600 hover:bg-slate-50' : 'text-slate-400 opacity-50 cursor-not-allowed'}`;
             });
             
             document.getElementById(`phase-${phase}`).classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            // 페이즈 전환 시 그리기 호출
             setTimeout(() => {
-                if(phase === 1) drawP1Arrows();
-                if(phase === 2 && !p2Data) initPhase2();
-                if(phase === 2 && p2Answered) drawP2Arrows();
-                if(phase === 3 && !p3Data) initPhase3();
-                if(phase === 3 && p3TableChecked) drawP3Arrows(); 
+                if(phase === 1) drawCommonArrows(1);
+                if(phase === 2) { if(!p2Data) loadStage(2, 0); else if(p2Answered) drawCommonArrows(2); }
+                if(phase === 3) { if(!p3Data) loadStage(3, 0); else if(p3TableChecked) drawCommonArrows(3); }
                 if(phase === 4) renderMathInElement(document.getElementById('phase-4'), {delimiters: [{left: "\\(", right: "\\)", display: false}]});
             }, 50);
         }
-
-        function unlockAndSwitch(phase) {
-            unlocked[phase] = true;
-            switchPhase(phase);
-        }
+        function unlockAndSwitch(phase) { unlocked[phase] = true; switchPhase(phase); }
 
         // ==========================================
-        // 화살표 렌더링 엔진 (공통)
+        // 3. 문제 불러오기 (2단계, 3단계 공용)
         // ==========================================
-        function drawArrowWithLabel(svgId, labelsId, prefix, startCol, endCol, isTop, labelText, type) {
-            const svg = document.getElementById(svgId);
-            const labelsContainer = document.getElementById(labelsId);
-            const startId = `${prefix}-${isTop?'x':'y'}-${startCol}`;
-            const endId = `${prefix}-${isTop?'x':'y'}-${endCol}`;
-            
-            const startEl = document.getElementById(startId);
-            const endEl = document.getElementById(endId);
-            if(!startEl || !endEl) return;
+        function loadStage(p, idx) {
+            const data = p === 2 ? p2Stages[idx] : p3Stages[idx];
+            if (p === 2) { p2Idx = idx; p2Data = data; p2Answered = false; } 
+            else { p3Idx = idx; p3Data = data; p3Answered = false; p3TableChecked = false; }
 
-            const svgRect = svg.getBoundingClientRect();
-            const startRect = startEl.getBoundingClientRect();
-            const endRect = endEl.getBoundingClientRect();
+            document.getElementById(`p${p}-progress`).innerText = idx + 1;
+            document.getElementById(`p${p}-svg`).innerHTML = '';
+            document.getElementById(`p${p}-labels`).innerHTML = '';
 
-            const x1 = (startRect.left + startRect.width / 2) - svgRect.left;
-            const y1 = isTop ? (startRect.top - svgRect.top) : (startRect.bottom - svgRect.top);
-            const x2 = (endRect.left + endRect.width / 2) - svgRect.left;
-            const y2 = isTop ? (endRect.top - svgRect.top) : (endRect.bottom - svgRect.top);
-
-            const dx = x2 - x1;
-            const colDiff = endCol - startCol;
-            
-            // 💡 세로 공간 최적화: 곡선의 높이를 줄여 태블릿 가로 모드에 적합하게 만듦
-            const curveHeight = isTop ? (25 + colDiff * 12) : (25 + colDiff * 12);
-
-            const cp1x = x1 + dx * 0.25;
-            const cp1y = isTop ? y1 - curveHeight : y1 + curveHeight;
-            const cp2x = x1 + dx * 0.75;
-            const cp2y = isTop ? y2 - curveHeight : y2 + curveHeight;
-
-            // 선 색상 결정
-            let strokeColor = '#3b82f6'; // x 기본 (파랑)
-            let labelClass = 'label-x';
-            if (!isTop) {
-                strokeColor = type === 'correct' ? '#e11d48' : '#ef4444'; // y 정상(빨강) / 오류(빨강)
-                labelClass = type === 'correct' ? 'label-y' : 'label-err';
-            }
-
-            // 마커(화살촉) 추가
-            const markerId = `arrowhead-${strokeColor.replace('#','')}`;
-            let defs = svg.querySelector('defs');
-            if(!defs) {
-                defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-                svg.appendChild(defs);
-            }
-            if(!document.getElementById(markerId)) {
-                const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
-                marker.setAttribute("id", markerId);
-                marker.setAttribute("viewBox", "0 0 10 10");
-                marker.setAttribute("refX", "7");
-                marker.setAttribute("refY", "5");
-                marker.setAttribute("markerWidth", "7");
-                marker.setAttribute("markerHeight", "7");
-                marker.setAttribute("orient", "auto-start-reverse");
-                const pathMarker = document.createElementNS("http://www.w3.org/2000/svg", "path");
-                pathMarker.setAttribute("d", "M 0 0 L 10 5 L 0 10 L 3 5 z");
-                pathMarker.setAttribute("fill", strokeColor);
-                marker.appendChild(pathMarker);
-                defs.appendChild(marker);
-            }
-
-            // Path 그리기
-            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            path.setAttribute("d", `M ${x1} ${y1} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${x2} ${y2}`);
-            path.setAttribute("fill", "none");
-            path.setAttribute("stroke", strokeColor);
-            path.setAttribute("stroke-width", "3");
-            path.setAttribute("stroke-dasharray", "6,6");
-            path.setAttribute("marker-end", `url(#${markerId})`);
-            svg.appendChild(path);
-
-            // 라벨 배치
-            const labelX = (x1 + x2) / 2;
-            const labelY = isTop ? (y1 - curveHeight * 0.75) : (y1 + curveHeight * 0.75);
-
-            const labelDiv = document.createElement('div');
-            labelDiv.className = `arrow-label ${labelClass}`;
-            labelDiv.style.left = `${labelX}px`;
-            labelDiv.style.top = `${labelY}px`;
-            labelDiv.innerHTML = labelText; 
-            labelsContainer.appendChild(labelDiv);
-        }
-
-        function clearArrows(svgId, labelsId) {
-            document.getElementById(svgId).innerHTML = '';
-            document.getElementById(labelsId).innerHTML = '';
-        }
-
-        // ==========================================
-        // PHASE 1 로직
-        // ==========================================
-        function drawP1Arrows() {
-            if(currentPhase !== 1) return;
-            clearArrows('p1-svg', 'p1-labels');
-            
-            // X (위쪽)
-            drawArrowWithLabel('p1-svg', 'p1-labels', 'p1', 1, 2, true, '2배', 'x');
-            drawArrowWithLabel('p1-svg', 'p1-labels', 'p1', 1, 3, true, '3배', 'x');
-            drawArrowWithLabel('p1-svg', 'p1-labels', 'p1', 1, 4, true, '4배', 'x');
-            
-            // Y (아래쪽)
-            drawArrowWithLabel('p1-svg', 'p1-labels', 'p1', 1, 2, false, '\\(\\frac{1}{2}\\)배', 'correct');
-            drawArrowWithLabel('p1-svg', 'p1-labels', 'p1', 1, 3, false, '\\(\\frac{1}{3}\\)배', 'correct');
-            drawArrowWithLabel('p1-svg', 'p1-labels', 'p1', 1, 4, false, '\\(\\frac{1}{4}\\)배', 'correct');
-
-            renderMathInElement(document.getElementById('p1-labels'), {delimiters: [{left: "\\(", right: "\\)", display: false}]});
-        }
-
-
-        // ==========================================
-        // PHASE 2 로직 (총 5문제)
-        // ==========================================
-        const p2Stages = [
-            {
-                x: [1, 2, 3, 4], y: [12, 6, 4, 3],
-                arrowsY: ['\\(\\frac{1}{2}\\)배', '\\(\\frac{1}{3}\\)배', '\\(\\frac{1}{4}\\)배'],
-                typeY: 'correct',
-                isInverse: true,
-                a: 12
-            },
-            {
-                x: [1, 2, 3, 4], y: [9, 8, 7, 6],
-                arrowsY: ['-1', '-2', '-3'], 
-                typeY: 'wrong',
-                isInverse: false,
-                fbDesc: "비율이 일정하게 감소하지 않으므로 반비례가 아닙니다."
-            },
-            {
-                x: [1, 2, 4, 5], y: [20, 10, 5, 4],
-                arrowsY: ['\\(\\frac{1}{2}\\)배', '\\(\\frac{1}{4}\\)배', '\\(\\frac{1}{5}\\)배'],
-                typeY: 'correct',
-                isInverse: true,
-                a: 20
-            },
-            {
-                x: [1, 2, 3, 4], y: [500, 1000, 1500, 2000],
-                arrowsY: ['2배', '3배', '4배'], 
-                typeY: 'wrong',
-                isInverse: false,
-                fbDesc: "반비례 관계가 아닌 정비례 관계입니다."
-            },
-            {
-                x: [10, 20, 50, 100], y: [10, 5, 2, 1],
-                arrowsY: ['\\(\\frac{1}{2}\\)배', '\\(\\frac{1}{5}\\)배', '\\(\\frac{1}{10}\\)배'],
-                typeY: 'correct',
-                isInverse: true,
-                a: 100
-            }
-        ];
-        
-        let p2Idx = 0;
-        let p2Data = null;
-        let p2Answered = false;
-
-        function initPhase2() {
-            loadP2Stage(0);
-        }
-
-        function loadP2Stage(idx) {
-            p2Idx = idx;
-            p2Data = p2Stages[idx];
-            p2Answered = false;
-
-            document.getElementById('p2-progress').innerText = idx + 1;
-            
-            for(let i=1; i<=4; i++) {
-                document.getElementById(`p2-x-${i}`).innerText = p2Data.x[i-1];
-                document.getElementById(`p2-y-${i}`).innerText = p2Data.y[i-1];
-            }
-
-            clearArrows('p2-svg', 'p2-labels');
-            setTimeout(drawP2Arrows, 50);
-
-            // 버튼 초기화
-            const btnYes = document.getElementById('p2-btn-yes');
-            const btnNo = document.getElementById('p2-btn-no');
-            btnYes.className = "o-x-btn btn-yes";
-            btnNo.className = "o-x-btn btn-no";
-
-            // 피드백 초기화
-            const fbArea = document.getElementById('p2-feedback-area');
-            fbArea.classList.remove('opacity-100');
-            fbArea.classList.add('opacity-0');
-            document.getElementById('p2-btn-next').classList.add('hidden');
-        }
-
-        function drawP2Arrows() {
-            clearArrows('p2-svg', 'p2-labels');
-            if(!p2Data) return;
-
-            const x1 = p2Data.x[0];
-            const x2 = p2Data.x[1];
-            const x3 = p2Data.x[2];
-            const x4 = p2Data.x[3];
-            drawArrowWithLabel('p2-svg', 'p2-labels', 'p2', 1, 2, true, `${x2/x1}배`, 'x');
-            drawArrowWithLabel('p2-svg', 'p2-labels', 'p2', 1, 3, true, `${x3/x1}배`, 'x');
-            drawArrowWithLabel('p2-svg', 'p2-labels', 'p2', 1, 4, true, `${x4/x1}배`, 'x');
-
-            drawArrowWithLabel('p2-svg', 'p2-labels', 'p2', 1, 2, false, p2Data.arrowsY[0], p2Data.typeY);
-            drawArrowWithLabel('p2-svg', 'p2-labels', 'p2', 1, 3, false, p2Data.arrowsY[1], p2Data.typeY);
-            drawArrowWithLabel('p2-svg', 'p2-labels', 'p2', 1, 4, false, p2Data.arrowsY[2], p2Data.typeY);
-
-            renderMathInElement(document.getElementById('p2-labels'), {delimiters: [{left: "\\(", right: "\\)", display: false}]});
-        }
-
-        function handleP2Choice(isYes) {
-            if(p2Answered) return;
-
-            const isCorrect = (isYes === p2Data.isInverse);
-            const btnYes = document.getElementById('p2-btn-yes');
-            const btnNo = document.getElementById('p2-btn-no');
-            
-            // 틀렸을 경우 빨간 경고 문구 출력 및 버튼 흔들기
-            if (!isCorrect) {
-                const wrongBtn = isYes ? btnYes : btnNo;
-                wrongBtn.classList.add('wrong-shake');
-                setTimeout(() => wrongBtn.classList.remove('wrong-shake'), 400);
-                
-                const fbArea = document.getElementById('p2-feedback-area');
-                const fbMsg = document.getElementById('p2-feedback-msg');
-                fbArea.classList.remove('opacity-0');
-                fbArea.classList.add('opacity-100');
-                fbMsg.innerHTML = `<div class="text-red-500 text-[1.1rem] font-bold">앗 틀렸습니다. 반비례 뜻을 다시 한번 생각해보세요</div>`;
-                document.getElementById('p2-btn-next').classList.add('hidden');
-                
-                return;
-            }
-
-            // 정답일 경우에만 통과 처리
-            p2Answered = true;
-            
-            if(isYes) {
-                btnYes.classList.add('selected');
-                btnNo.classList.add('btn-disabled');
-            } else {
-                btnNo.classList.add('selected');
-                btnYes.classList.add('btn-disabled');
-            }
-
-            const fbArea = document.getElementById('p2-feedback-area');
-            const fbMsg = document.getElementById('p2-feedback-msg');
-            fbArea.classList.remove('opacity-0');
-            fbArea.classList.add('opacity-100');
-
-            let msgHtml = '<div class="text-emerald-600 text-[1.2rem] font-black mb-2">🎉 정답입니다!</div>';
-            
-            // 반비례 상황일 경우 관계식 출력
-            if (p2Data.isInverse) {
-                msgHtml += `<div class="text-slate-800 text-[1.1rem] font-bold">x와 y 사이의 관계식은 \\(y=\\frac{${p2Data.a}}{x}\\)로 반비례입니다.</div>`;
-            } else {
-                msgHtml += `<div class="text-slate-800 text-[1.1rem] font-bold">${p2Data.fbDesc}</div>`;
-            }
-            
-            fbMsg.innerHTML = msgHtml;
-            renderMathInElement(fbMsg, {delimiters: [{left: "\\(", right: "\\)", display: false}]});
-
-            const btnNext = document.getElementById('p2-btn-next');
-            btnNext.classList.remove('hidden');
-            if (p2Idx >= p2Stages.length - 1) {
-                btnNext.innerText = "실전 문제로 넘어가기";
-                unlocked[3] = true;
-            } else {
-                btnNext.innerText = "다음 문제로";
-            }
-        }
-
-        document.getElementById('p2-btn-yes').addEventListener('click', () => handleP2Choice(true));
-        document.getElementById('p2-btn-no').addEventListener('click', () => handleP2Choice(false));
-        
-        document.getElementById('p2-btn-next').addEventListener('click', () => {
-            if(p2Idx < p2Stages.length - 1) {
-                loadP2Stage(p2Idx + 1);
-            } else {
-                unlockAndSwitch(3);
-            }
-        });
-
-
-        // ==========================================
-        // PHASE 3 로직
-        // ==========================================
-        const p3Stages = [
-            {
-                desc: "용돈 30,000원을 친구 \\(x\\)명이 똑같이 나누어 가질 때 1명이 받는 돈 \\(y\\)원 사이의 관계식 \\(y=\\frac{30000}{x}\\)에 맞게 채우세요.",
-                x: [1, 2, 3, 4],
-                y: [30000, 15000, 10000, 7500], 
-                blanks: [false, true, true, true], 
-                isInverse: true,
-                a: 30000
-            },
-            {
-                desc: "1분에 12L씩 물이 나오는 호스로 수조에 물을 받을 때, 시간 \\(x\\)분과 채워진 물의 양 \\(y\\)L 사이의 관계식 \\(y=12x\\)에 맞게 채우세요.",
-                x: [1, 2, 3, 4],
-                y: [12, 24, 36, 48],
-                blanks: [false, true, true, true],
-                isInverse: false,
-                fbDesc: "반비례 관계가 아닌 정비례 관계입니다."
-            },
-            {
-                desc: "총 120쪽인 책을 매일 \\(x\\)쪽씩 읽을 때, 책을 다 읽는 데 걸리는 일수 \\(y\\)일 사이의 관계식 \\(y=\\frac{120}{x}\\)에 맞게 채우세요.",
-                x: [10, 20, 30, 40],
-                y: [12, 6, 4, 3],
-                blanks: [false, true, true, true], 
-                isInverse: true,
-                a: 120
-            }
-        ];
-
-        let p3Idx = 0;
-        let p3Data = null;
-        let p3TableChecked = false;
-        let p3Answered = false;
-
-        function initPhase3() {
-            loadP3Stage(0);
-        }
-
-        function loadP3Stage(idx) {
-            p3Idx = idx;
-            p3Data = p3Stages[idx];
-            p3TableChecked = false;
-            p3Answered = false;
-
-            document.getElementById('p3-progress').innerText = idx + 1;
-            document.getElementById('p3-desc').innerHTML = p3Data.desc;
-            renderMathInElement(document.getElementById('p3-desc'), {delimiters: [{left: "\\(", right: "\\)", display: false}]});
-
-            clearArrows('p3-svg', 'p3-labels');
-
-            // 테이블 렌더링
-            for(let i=1; i<=4; i++) {
-                document.getElementById(`p3-x-${i}`).innerText = p3Data.x[i-1];
-                
-                const yCell = document.getElementById(`p3-y-${i}`);
-                if(p3Data.blanks[i-1]) {
-                    yCell.innerHTML = `<input type="number" id="p3-in-${i}" class="input-cell" autocomplete="off">`;
+            for (let i = 1; i <= 4; i++) {
+                document.getElementById(`p${p}-x-${i}`).innerText = data.x[i-1];
+                if (p === 2) {
+                    document.getElementById(`p2-y-${i}`).innerText = data.y[i-1];
                 } else {
-                    yCell.innerHTML = p3Data.y[i-1];
+                    const yCell = document.getElementById(`p3-y-${i}`);
+                    yCell.innerHTML = data.blanks[i-1] ? `<input type="number" id="p3-in-${i}" class="input-cell" autocomplete="off">` : data.y[i-1];
                 }
             }
 
-            // UI 초기화
-            document.getElementById('p3-input-err').classList.add('hidden');
-            document.getElementById('p3-check-area').classList.remove('hidden');
-            document.getElementById('p3-ox-area').classList.add('hidden');
-            
-            const btnYes = document.getElementById('p3-btn-yes');
-            const btnNo = document.getElementById('p3-btn-no');
-            btnYes.className = "o-x-btn btn-yes";
-            btnNo.className = "o-x-btn btn-no";
+            if (p === 2) {
+                setTimeout(() => drawCommonArrows(2), 50);
+            } else {
+                const descEl = document.getElementById('p3-desc');
+                descEl.innerHTML = data.desc;
+                renderMathInElement(descEl, {delimiters: [{left: "\\(", right: "\\)", display: false}]});
+                document.getElementById('p3-input-err').classList.add('hidden');
+                document.getElementById('p3-check-area').classList.remove('hidden');
+                document.getElementById('p3-ox-area').classList.add('hidden');
+            }
 
-            const fbArea = document.getElementById('p3-feedback-area');
-            fbArea.classList.remove('opacity-100');
-            fbArea.classList.add('opacity-0');
-            document.getElementById('p3-btn-next').classList.add('hidden');
+            document.getElementById(`p${p}-btn-yes`).className = "o-x-btn btn-yes";
+            document.getElementById(`p${p}-btn-no`).className = "o-x-btn btn-no";
+            document.getElementById(`p${p}-feedback-area`).classList.replace('opacity-100', 'opacity-0');
+            document.getElementById(`p${p}-btn-next`).classList.add('hidden');
         }
 
-        // 1단계: 표 완성 확인
+        // ==========================================
+        // 4. 정답 O/X 선택 처리 (2단계, 3단계 공용)
+        // ==========================================
+        function handleOXChoice(p, isYes) {
+            if ((p === 2 && p2Answered) || (p === 3 && p3Answered)) return;
+            const data = p === 2 ? p2Data : p3Data;
+
+            if (isYes !== data.isInverse) {
+                const wrongBtn = document.getElementById(`p${p}-btn-${isYes ? 'yes' : 'no'}`);
+                wrongBtn.classList.add('wrong-shake');
+                setTimeout(() => wrongBtn.classList.remove('wrong-shake'), 400);
+                
+                const fbArea = document.getElementById(`p${p}-feedback-area`);
+                fbArea.classList.replace('opacity-0', 'opacity-100');
+                document.getElementById(`p${p}-feedback-msg`).innerHTML = `<div class="text-red-500 text-[1.1rem] font-bold">앗 틀렸습니다. 반비례 뜻을 다시 한번 생각해보세요</div>`;
+                document.getElementById(`p${p}-btn-next`).classList.add('hidden');
+                return;
+            }
+
+            if (p === 2) p2Answered = true; else p3Answered = true;
+            
+            document.getElementById(`p${p}-btn-yes`).classList.toggle('selected', isYes);
+            document.getElementById(`p${p}-btn-yes`).classList.toggle('btn-disabled', !isYes);
+            document.getElementById(`p${p}-btn-no`).classList.toggle('selected', !isYes);
+            document.getElementById(`p${p}-btn-no`).classList.toggle('btn-disabled', isYes);
+
+            const fbArea = document.getElementById(`p${p}-feedback-area`);
+            fbArea.classList.replace('opacity-0', 'opacity-100');
+
+            let msg = '<div class="text-emerald-600 text-[1.2rem] font-black mb-2">🎉 정답입니다!</div>';
+            if (data.isInverse) msg += `<div class="text-slate-800 text-[1.1rem] font-bold">x와 y 사이의 관계식은 \\(y=\\frac{${data.a}}{x}\\)로 반비례${p === 2 ? '입니다.' : '가 맞습니다!'}</div>`;
+            else msg += `<div class="text-slate-800 text-[1.1rem] font-bold">${data.fbDesc}</div>`;
+            
+            document.getElementById(`p${p}-feedback-msg`).innerHTML = msg;
+            renderMathInElement(document.getElementById(`p${p}-feedback-msg`), {delimiters: [{left: "\\(", right: "\\)", display: false}]});
+
+            const btnNext = document.getElementById(`p${p}-btn-next`);
+            btnNext.classList.remove('hidden');
+            const isLast = (p === 2 ? p2Idx : p3Idx) >= (p === 2 ? p2Stages : p3Stages).length - 1;
+            
+            btnNext.innerText = p === 2 ? (isLast ? "실전 문제로 넘어가기" : "다음 문제로") : (isLast ? "요약 정리 보기 →" : "다음 실전으로");
+            btnNext.onclick = () => isLast ? unlockAndSwitch(p === 2 ? 3 : 4) : loadStage(p, (p === 2 ? p2Idx : p3Idx) + 1);
+        }
+
+        // 3단계 표 완성 검사기
         document.getElementById('p3-btn-check').addEventListener('click', () => {
             let allCorrect = true;
             for(let i=1; i<=4; i++) {
                 if(p3Data.blanks[i-1]) {
                     const input = document.getElementById(`p3-in-${i}`);
                     if(parseInt(input.value) === p3Data.y[i-1]) {
-                        input.classList.add('input-correct');
-                        input.disabled = true;
+                        input.classList.add('input-correct'); input.disabled = true;
                     } else {
-                        input.classList.remove('input-correct');
-                        allCorrect = false;
+                        input.classList.remove('input-correct'); allCorrect = false;
                     }
                 }
             }
-
-            const err = document.getElementById('p3-input-err');
             if(allCorrect) {
-                err.classList.add('hidden');
+                document.getElementById('p3-input-err').classList.add('hidden');
                 document.getElementById('p3-check-area').classList.add('hidden'); 
                 document.getElementById('p3-ox-area').classList.remove('hidden'); 
-                
-                p3TableChecked = true;
-                drawP3Arrows(); 
+                p3TableChecked = true; drawCommonArrows(3); 
             } else {
-                err.classList.remove('hidden');
+                document.getElementById('p3-input-err').classList.remove('hidden');
             }
         });
 
-        // 실전 문제에서도 모든 증가율 화살표(2,3,4배) 및 반비례 성립 화살표(1/2, 1/3, 1/4배)가 표시되도록 구성
-        function drawP3Arrows() {
-            clearArrows('p3-svg', 'p3-labels');
-            
-            // X (위쪽) - 모든 단계 2배, 3배, 4배 화살표 완벽 고정 표시
-            drawArrowWithLabel('p3-svg', 'p3-labels', 'p3', 1, 2, true, '2배', 'x');
-            drawArrowWithLabel('p3-svg', 'p3-labels', 'p3', 1, 3, true, '3배', 'x');
-            drawArrowWithLabel('p3-svg', 'p3-labels', 'p3', 1, 4, true, '4배', 'x');
+        // ==========================================
+        // 5. 통합 화살표 그리기 엔진
+        // ==========================================
+        function drawArrowWithLabel(svg, labelsContainer, prefix, start, end, isTop, labelText, type) {
+            const el1 = document.getElementById(`${prefix}-${isTop?'x':'y'}-${start}`);
+            const el2 = document.getElementById(`${prefix}-${isTop?'x':'y'}-${end}`);
+            if(!el1 || !el2) return;
 
-            // Y (아래쪽)
-            if(p3Data.isInverse) {
-                // 반비례 상황일 때: 1/2배, 1/3배, 1/4배 정상 작도 (빨간색 계열)
-                drawArrowWithLabel('p3-svg', 'p3-labels', 'p3', 1, 2, false, `\\(\\frac{1}{2}\\)배`, 'correct');
-                drawArrowWithLabel('p3-svg', 'p3-labels', 'p3', 1, 3, false, `\\(\\frac{1}{3}\\)배`, 'correct');
-                drawArrowWithLabel('p3-svg', 'p3-labels', 'p3', 1, 4, false, `\\(\\frac{1}{4}\\)배`, 'correct');
-            } else {
-                // 반비례 상황이 아닐 때: 실제 배수(2배, 3배, 4배)를 빨간색 오류 테두리 라벨로 작도
-                drawArrowWithLabel('p3-svg', 'p3-labels', 'p3', 1, 2, false, `2배`, 'wrong');
-                drawArrowWithLabel('p3-svg', 'p3-labels', 'p3', 1, 3, false, `3배`, 'wrong');
-                drawArrowWithLabel('p3-svg', 'p3-labels', 'p3', 1, 4, false, `4배`, 'wrong');
+            const sR = svg.getBoundingClientRect(), r1 = el1.getBoundingClientRect(), r2 = el2.getBoundingClientRect();
+            const x1 = r1.left + r1.width/2 - sR.left, y1 = isTop ? r1.top - sR.top : r1.bottom - sR.top;
+            const x2 = r2.left + r2.width/2 - sR.left, y2 = isTop ? r2.top - sR.top : r2.bottom - sR.top;
+            
+            const cvH = isTop ? 25 + (end-start)*12 : 25 + (end-start)*12;
+            const cp1x = x1 + (x2-x1)*0.25, cp1y = isTop ? y1-cvH : y1+cvH;
+            const cp2x = x1 + (x2-x1)*0.75, cp2y = isTop ? y2-cvH : y2+cvH;
+
+            const color = isTop ? '#3b82f6' : (type === 'correct' ? '#e11d48' : '#ef4444');
+            const lClass = isTop ? 'label-x' : (type === 'correct' ? 'label-y' : 'label-err');
+
+            let defs = svg.querySelector('defs') || svg.appendChild(document.createElementNS("http://www.w3.org/2000/svg", "defs"));
+            const mId = `ah-${color.replace('#','')}`;
+            if(!document.getElementById(mId)) {
+                const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
+                marker.setAttribute("id", mId); marker.setAttribute("viewBox", "0 0 10 10"); marker.setAttribute("refX", "7"); marker.setAttribute("refY", "5"); marker.setAttribute("markerWidth", "7"); marker.setAttribute("markerHeight", "7"); marker.setAttribute("orient", "auto-start-reverse");
+                const pM = document.createElementNS("http://www.w3.org/2000/svg", "path"); pM.setAttribute("d", "M 0 0 L 10 5 L 0 10 L 3 5 z"); pM.setAttribute("fill", color); marker.appendChild(pM); defs.appendChild(marker);
             }
-            renderMathInElement(document.getElementById('p3-labels'), {delimiters: [{left: "\\(", right: "\\)", display: false}]});
+
+            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            path.setAttribute("d", `M ${x1} ${y1} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${x2} ${y2}`);
+            path.setAttribute("fill", "none"); path.setAttribute("stroke", color); path.setAttribute("stroke-width", "3"); path.setAttribute("stroke-dasharray", "6,6"); path.setAttribute("marker-end", `url(#${mId})`);
+            svg.appendChild(path);
+
+            const div = document.createElement('div');
+            div.className = `arrow-label ${lClass}`; div.style.left = `${(x1+x2)/2}px`; div.style.top = `${isTop ? y1-cvH*0.75 : y1+cvH*0.75}px`; div.innerHTML = labelText; 
+            labelsContainer.appendChild(div);
         }
 
-        // 2단계: O/X 판단
-        function handleP3Choice(isYes) {
-            if(p3Answered) return;
-
-            const isCorrect = (isYes === p3Data.isInverse);
-            const btnYes = document.getElementById('p3-btn-yes');
-            const btnNo = document.getElementById('p3-btn-no');
+        function drawCommonArrows(p) {
+            const svg = document.getElementById(`p${p}-svg`), lbls = document.getElementById(`p${p}-labels`);
+            svg.innerHTML = ''; lbls.innerHTML = '';
             
-            // 틀렸을 경우 진행을 제한하고 빨간 경고 메시지 출력
-            if (!isCorrect) {
-                const wrongBtn = isYes ? btnYes : btnNo;
-                wrongBtn.classList.add('wrong-shake');
-                setTimeout(() => wrongBtn.classList.remove('wrong-shake'), 400);
-                
-                const fbArea = document.getElementById('p3-feedback-area');
-                const fbMsg = document.getElementById('p3-feedback-msg');
-                fbArea.classList.remove('opacity-0');
-                fbArea.classList.add('opacity-100');
-                fbMsg.innerHTML = `<div class="text-red-500 text-[1.1rem] font-bold">앗 틀렸습니다. 반비례 뜻을 다시 한번 생각해보세요</div>`;
-                document.getElementById('p3-btn-next').classList.add('hidden');
-                
-                return;
-            }
-
-            // 정답일 경우에만 통과 처리
-            p3Answered = true;
-            
-            if(isYes) {
-                btnYes.classList.add('selected');
-                btnNo.classList.add('btn-disabled');
+            if (p === 1) {
+                for (let i = 2; i <= 4; i++) {
+                    drawArrowWithLabel(svg, lbls, 'p1', 1, i, true, `${i}배`, 'x');
+                    drawArrowWithLabel(svg, lbls, 'p1', 1, i, false, `\\(\\frac{1}{${i}}\\)배`, 'correct');
+                }
             } else {
-                btnNo.classList.add('selected');
-                btnYes.classList.add('btn-disabled');
+                const data = p === 2 ? p2Data : p3Data;
+                if (!data) return;
+                const x1 = data.x[0];
+                for (let i = 1; i < 4; i++) {
+                    drawArrowWithLabel(svg, lbls, `p${p}`, 1, i+1, true, `${data.x[i]/x1}배`, 'x');
+                    if (p === 2) {
+                        drawArrowWithLabel(svg, lbls, 'p2', 1, i+1, false, data.arrowsY[i-1], data.typeY);
+                    } else {
+                        const r = data.x[i]/x1;
+                        if(data.isInverse) drawArrowWithLabel(svg, lbls, 'p3', 1, i+1, false, `\\(\\frac{1}{${r}}\\)배`, 'correct');
+                        else drawArrowWithLabel(svg, lbls, 'p3', 1, i+1, false, `${r}배`, 'wrong');
+                    }
+                }
             }
-
-            const fbArea = document.getElementById('p3-feedback-area');
-            const fbMsg = document.getElementById('p3-feedback-msg');
-            fbArea.classList.remove('opacity-0');
-            fbArea.classList.add('opacity-100');
-
-            let msgHtml = '<div class="text-emerald-600 text-[1.2rem] font-black mb-2">🎉 정답입니다!</div>';
-            
-            if (p3Data.isInverse) {
-                msgHtml += `<div class="text-slate-800 text-[1.1rem] font-bold">x와 y 사이의 관계식은 \\(y=\\frac{${p3Data.a}}{x}\\)로 반비례가 맞습니다!</div>`;
-            } else {
-                msgHtml += `<div class="text-slate-800 text-[1.1rem] font-bold">${p3Data.fbDesc}</div>`;
-            }
-
-            fbMsg.innerHTML = msgHtml;
-            renderMathInElement(fbMsg, {delimiters: [{left: "\\(", right: "\\)", display: false}]});
-
-            const btnNext = document.getElementById('p3-btn-next');
-            btnNext.classList.remove('hidden');
-            if (p3Idx >= p3Stages.length - 1) {
-                btnNext.innerText = "요약 정리 보기 →";
-                btnNext.onclick = () => { unlockAndSwitch(4); };
-            } else {
-                btnNext.innerText = "다음 실전으로";
-                btnNext.onclick = () => { loadP3Stage(p3Idx + 1); };
-            }
+            renderMathInElement(lbls, {delimiters: [{left: "\\(", right: "\\)", display: false}]});
         }
-
-        document.getElementById('p3-btn-yes').addEventListener('click', () => handleP3Choice(true));
-        document.getElementById('p3-btn-no').addEventListener('click', () => handleP3Choice(false));
-
 
         // ==========================================
-        // 글로벌 리사이즈 이벤트
+        // 6. 초기화 및 리사이즈
         // ==========================================
         window.addEventListener('resize', () => {
-            if(currentPhase === 1) drawP1Arrows();
-            if(currentPhase === 2 && p2Answered) drawP2Arrows();
-            if(currentPhase === 3 && p3TableChecked) drawP3Arrows();
+            if(currentPhase === 1) drawCommonArrows(1);
+            if(currentPhase === 2 && p2Answered) drawCommonArrows(2);
+            if(currentPhase === 3 && p3TableChecked) drawCommonArrows(3);
         });
 
-        // 초기 시작
         window.onload = () => {
             setTimeout(() => { switchPhase(1); }, 100);
+            
+            const p1Btn = document.getElementById('btn-phase1-next');
+            let timeLeft = 10;
+            const timerId = setInterval(() => {
+                timeLeft--;
+                if (timeLeft > 0) p1Btn.innerHTML = `개념을 읽어보세요 (${timeLeft}초)`;
+                else {
+                    clearInterval(timerId); p1Btn.disabled = false;
+                    p1Btn.className = "bg-primary hover-bg-primary text-white font-bold py-4 px-10 rounded-xl text-lg shadow-md transition-all mt-4 inline-flex items-center gap-2 cursor-pointer";
+                    p1Btn.innerHTML = `이해했어요! 판단 연습하러 가기 <span class="text-xl">→</span>`;
+                }
+            }, 1000);
         };
     </script>
 </body>
