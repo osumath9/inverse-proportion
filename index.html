@@ -596,7 +596,8 @@
                 x: [1, 2, 3, 4], y: [9, 8, 7, 6],
                 arrowsY: ['-1', '-2', '-3'], 
                 typeY: 'wrong',
-                isInverse: false
+                isInverse: false,
+                fbDesc: "비율이 일정하게 감소하지 않으므로 반비례가 아닙니다."
             },
             {
                 x: [1, 2, 4, 5], y: [20, 10, 5, 4],
@@ -609,7 +610,8 @@
                 x: [1, 2, 3, 4], y: [500, 1000, 1500, 2000],
                 arrowsY: ['2배', '3배', '4배'], 
                 typeY: 'wrong',
-                isInverse: false
+                isInverse: false,
+                fbDesc: "반비례 관계가 아닌 정비례 관계입니다."
             },
             {
                 x: [10, 20, 50, 100], y: [10, 5, 2, 1],
@@ -720,7 +722,7 @@
             if (p2Data.isInverse) {
                 msgHtml += `<div class="text-slate-800 text-[1.1rem] font-bold">x와 y 사이의 관계식은 \\(y=\\frac{${p2Data.a}}{x}\\)로 반비례입니다.</div>`;
             } else {
-                msgHtml += `<div class="text-slate-800 text-[1.1rem] font-bold">비율이 일정하게 감소하지 않으므로 반비례가 아닙니다.</div>`;
+                msgHtml += `<div class="text-slate-800 text-[1.1rem] font-bold">${p2Data.fbDesc}</div>`;
             }
             
             fbMsg.innerHTML = msgHtml;
@@ -753,7 +755,7 @@
         // ==========================================
         const p3Stages = [
             {
-                desc: "용돈 30,000원을 친구 \\(x\\)명이 똑같이 나누어 가질 때 1명이 받는 돈 \\(y\\)원",
+                desc: "용돈 30,000원을 친구 \\(x\\)명이 똑같이 나누어 가질 때 1명이 받는 돈 \\(y\\)원 사이의 관계식 \\(y=\\frac{30000}{x}\\)에 맞게 채우세요.",
                 x: [1, 2, 3, 4],
                 y: [30000, 15000, 10000, 7500], 
                 blanks: [false, true, true, true], 
@@ -761,14 +763,15 @@
                 a: 30000
             },
             {
-                desc: "1분에 12L씩 물이 나오는 호스로 수조에 물을 받을 때, 시간 \\(x\\)분과 채워진 물의 양 \\(y\\)L",
+                desc: "1분에 12L씩 물이 나오는 호스로 수조에 물을 받을 때, 시간 \\(x\\)분과 채워진 물의 양 \\(y\\)L 사이의 관계식 \\(y=12x\\)에 맞게 채우세요.",
                 x: [1, 2, 3, 4],
                 y: [12, 24, 36, 48],
                 blanks: [false, true, true, true],
-                isInverse: false
+                isInverse: false,
+                fbDesc: "반비례 관계가 아닌 정비례 관계입니다."
             },
             {
-                desc: "총 120쪽인 책을 매일 \\(x\\)쪽씩 읽을 때, 책을 다 읽는 데 걸리는 일수 \\(y\\)일",
+                desc: "총 120쪽인 책을 매일 \\(x\\)쪽씩 읽을 때, 책을 다 읽는 데 걸리는 일수 \\(y\\)일 사이의 관계식 \\(y=\\frac{120}{x}\\)에 맞게 채우세요.",
                 x: [10, 20, 30, 40],
                 y: [12, 6, 4, 3],
                 blanks: [false, true, true, true], 
@@ -924,7 +927,7 @@
             if (p3Data.isInverse) {
                 msgHtml += `<div class="text-slate-800 text-[1.1rem] font-bold">x와 y 사이의 관계식은 \\(y=\\frac{${p3Data.a}}{x}\\)로 반비례가 맞습니다!</div>`;
             } else {
-                msgHtml += `<div class="text-slate-800 text-[1.1rem] font-bold">비율이 일정하게 감소하지 않으므로 반비례가 아닙니다.</div>`;
+                msgHtml += `<div class="text-slate-800 text-[1.1rem] font-bold">${p3Data.fbDesc}</div>`;
             }
 
             fbMsg.innerHTML = msgHtml;
